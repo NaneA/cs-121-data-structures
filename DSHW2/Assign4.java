@@ -19,7 +19,7 @@ public class Assign4 {
 			k++;
 			i++;
 		}
-		while (j < leftSize) {
+		while (j < rightSize) {
 			arr[k] = right[j];
 			k++;
 			j++;

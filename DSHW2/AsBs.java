@@ -1,5 +1,5 @@
 public class AsBs {
-	public static String AsBsDeconstruct(String str) {
+	public static String AsBsDeconstruct(String str) throws IllegalArgumentException {
 		String temp = "";
 
 		for(int i = 0; i < str.length()-1; i++) {
@@ -10,8 +10,7 @@ public class AsBs {
 				temp+="B";
 				i+=2;
 			} else {
-				temp = str;
-				break;
+				throw new IllegalArgumentException();
 			}
 		}
 		System.out.println(str);
@@ -21,9 +20,12 @@ public class AsBs {
 		return AsBsDeconstruct(temp);
 	}
 
-	public static String AsBsConstruct(String str, int level) {
+	public static String AsBsConstruct(String str, int level) throws IllegalArgumentException {
 		if(level <= 0) {
 			return str;
+		}
+		if(!(str.equals("A") || str.equals("B"))) {
+			throw new IllegalArgumentException();
 		}
 		String temp = "";
 		for(int i = 0; i < str.length(); i++) {
@@ -31,8 +33,6 @@ public class AsBs {
 				temp += "AB";
 			} else if(str.charAt(i) == 'B') {
 				temp += "BBA";
-			} else {
-				temp += str.charAt(i);
 			}
 		}
 		System.out.println(str);
@@ -40,6 +40,6 @@ public class AsBs {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(AsBsDeconstruct("SABS"));
+		System.out.println(AsBsDeconstruct("ABBBABBABBAAB"));
 	}
 }

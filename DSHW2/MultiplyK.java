@@ -1,6 +1,5 @@
 public class MultiplyK {
 
-    //assignment 1
     static int multiplyK(int[] arr, int k) throws IllegalArgumentException {
         if(k > arr.length || k < 0) {
             throw new IllegalArgumentException("Passed " + Integer.toString(k) + " should be between 1 and arr.length");
@@ -10,7 +9,6 @@ public class MultiplyK {
         }
         return arr[k-1] * multiplyK(arr, k - 1);
     }
-    //end assignment 1
 
     public static void main(String[] args) {
         /* tests for the first assignment
