@@ -174,6 +174,8 @@ public class SLL<E> {
     }
     
     public static void increment2D(SLL<SLL<Integer>> list) {
-        
+        for(int i = 0; i < list.size(); i++) {
+            list.getAt(i).increment();
+        }
     }
 }
