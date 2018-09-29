@@ -1,8 +1,8 @@
 public class MultiplyK {
 
-    static int multiplyK(int[] arr, int k) throws IllegalArgumentException {
+    public static int multiplyK(int[] arr, int k) throws IllegalArgumentException {
         if(k > arr.length || k < 0) {
-            throw new IllegalArgumentException("Passed " + Integer.toString(k) + " should be between 1 and arr.length");
+            throw new IllegalArgumentException("Passed " + Integer.toString(k) + ", should be between 1 and arr.length");
         }
         if(k == 0) {
             return 1;

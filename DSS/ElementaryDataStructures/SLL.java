@@ -150,7 +150,7 @@ public class SLL<E> {
     public void insertionSort() {
         Node<Integer> current = (Node<Integer>)head;
         Node<Integer> tail = null;
-        while(current != null && tail != head ) {
+        while(current != null && tail != head) {
           Node<Integer> next = current;
           while(next.next != tail) {
             if(next.getElement() <= next.next.getElement()) {
