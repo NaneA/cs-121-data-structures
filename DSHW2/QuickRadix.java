@@ -1,14 +1,14 @@
 public class QuickRadix {
-    public static void QuickRadix(String[] str, int i, int j) {
+    private static void QuickRadixHelper(String[] str, int i, int j, int position) {
         if(i < j) {
-            int p = partition(str, i, j, 1);
-            QuickRadix(str, i, p-1);
-            QuickRadix(str, p, j);
+            int p = partition(str, i, j, position);
+            QuickRadixHelper(str, i, p-1, position);
+            QuickRadixHelper(str, p, j, position);
         }
     }
 
 
-    public static int partition(String[] strSet, int low, int high, int position) {
+    private static int partition(String[] strSet, int low, int high, int position) {
         char pivot = strSet[high].charAt(position);
         int i = (low-1); // index of smaller element
         for (int j = low; j < high; j++) {
@@ -30,15 +30,47 @@ public class QuickRadix {
         return i+1;
     }
 
+    private static void doOneByOne(String[] strSet, int ind) {
+        if(ind+1 >= strSet[0].length()) {
+            return;
+        }
+        String c = strSet[0].substring(0, ind);
+        int low = 0;
+        int high = 0;
+
+        for(int i = 1; i < strSet.length; i++) {
+            if(strSet[i].substring(0, ind).equals(c)) {
+                high++;
+            } else {
+                c = strSet[i].substring(0, ind);
+                if(high - low > 0) {
+
+                    System.out.println(high);
+                    System.out.println(low);
+                    QuickRadixHelper(strSet, low, high, ind+1);
+                }
+                low = i;
+                high = i;
+            }
+        }
+        doOneByOne(strSet, ind+1);
+    }
+
+    public static void QuickRadix(String[] strSet) {
+        QuickRadixHelper(strSet, 0, strSet.length-1, 0);
+        doOneByOne(strSet, 0);
+    }
     public static void main(String[] args) {
         String[] stringSet = {
-                "dferferiuh",
-                "eirojfioer",
+                "aewrerfefe",
+                "aarojfioer",
+                "qbrojfioer",
+                "acrojfioer",
                 "dewjuifeer",
-                "ewferuefwf"
+                "qwferuefwf"
         };
-        System.out.println('b' < 'q');
-        QuickRadix(stringSet, 0, stringSet.length-1);
+        QuickRadix(stringSet);
+
         for(int i = 0; i < stringSet.length; i++) {
             System.out.println(stringSet[i]);
         }

@@ -20,13 +20,14 @@ public class AsBs {
 		return AsBsDeconstruct(temp);
 	}
 
+	//we don't need this, but it is nice to have :)
 	public static String AsBsConstruct(String str, int level) throws IllegalArgumentException {
 		if(level <= 0) {
 			return str;
 		}
-		if(!(str.equals("A") || str.equals("B"))) {
-			throw new IllegalArgumentException();
-		}
+		// if(!(str.equals("A") || str.equals("B"))) {
+		// 	throw new IllegalArgumentException();
+		// }
 		String temp = "";
 		for(int i = 0; i < str.length(); i++) {
 			if(str.charAt(i) == 'A') {
@@ -40,6 +41,6 @@ public class AsBs {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(AsBsDeconstruct("ABBBABBABBAAB"));
+			System.out.println(AsBsConstruct("A", 5));
 	}
 }

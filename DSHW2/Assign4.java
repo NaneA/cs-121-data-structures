@@ -65,14 +65,17 @@ public class Assign4 {
 	} // O(nlog(n)) + O(n) = O(nlog(n))
 
 	public static void main(String[] args) {
-		int[] input = {3, 4, 5, 6, 734, 2, 7, 9};
+		int[] input = {3, 4, 5, 45, 656, 756, 76, 8, 532, 4234, 2, 5, 546, 5, 6, 734, 2, 7, 9};
 		int[] output = new int[2];
-		int x = 9;
+		int x = 50;
 		output = checkInUnsortedArray(input, x);
 		if(output != null) {
 			System.out.println(output[0] + "+" + output[1] + "=" + x);
 		} else {
 			System.out.println("Not found");
+		}
+		for(int i : input) {
+			System.out.println(i);
 		}
 	}
 }

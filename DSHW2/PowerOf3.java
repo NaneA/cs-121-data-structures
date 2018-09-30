@@ -1,17 +1,14 @@
 public class PowerOf3 {
-	private static void powerOf3Helper(char[][] arr, int start, int l, int index) {
+	private static void powerOf3Helper(char[] arr, int start, int end, int l, int row) {
 		int interval = l/3;
-		if(interval == 0) {
+		if(interval == 0 || row <= 0) {
 			return;
 		}
-		for (int i = index; i < arr.length; i++) {
-            for (int j = start + interval; j < start + interval * 2; j++) {
-                arr[i][j] = ' ';
-            }
-        }
-
-        powerOf3Helper(arr, start, interval, index + 1);
-        powerOf3Helper(arr, start + interval * 2, interval, index + 1);
+		for(int i = start + interval; i < end - interval + 1; i++) {
+			arr[i] = ' ';
+		}
+		powerOf3Helper(arr, start, start + interval-1, interval, row-1);
+		powerOf3Helper(arr, start + 2*interval, end, interval, row-1);
 	}
 	public static void powerOf3(String str) {
 		if(1162261467 % str.length() != 0) {
@@ -23,28 +20,28 @@ public class PowerOf3 {
 		int length = str.length();
 		int k = (int)(Math.log(length)/Math.log(3));
 
-		char[][] theSet = new char[k+1][length];
-		powerOf3Helper(theSet, 0, length, 1);
-
-		for (int i = 0; i < k+1; i++) {
-            for (int j = 0; j < length; j++) {
-            	if(theSet[i][j] != ' ') {
-            		System.out.print(str.charAt(0));
-            	} else {
-            		System.out.print(theSet[i][j]);
-            	}
-            }
-            System.out.println();
-        }
+		char[] theSet = new char[length];
+		for(int i = 0; i < k+1; i++) {
+			powerOf3Helper(theSet, 0, length - 1, length, i);
+			for(int j = 0; j < theSet.length; j++) {
+				if(theSet[j] == ' '){
+					System.out.print(" ");
+				} else {
+					System.out.print("*");
+				}
+			}
+			System.out.println();
+		}
 	}
 	public static void main(String args[]) {
-		DevilsStaircase("*");
-		DevilsStaircase("***");
-		DevilsStaircase("******");
-		DevilsStaircase("*********");
-		DevilsStaircase("***************************");
-		DevilsStaircase("*********************************************************************************");
+
+		powerOf3("*");
+		powerOf3("***");
+		powerOf3("******");
+		powerOf3("*********");
+		powerOf3("***************************");
+		powerOf3("*********************************************************************************");
 		//my screen is too small for 81 :'(
-		DevilsStaircase("*****************************************************************************"); //wrong input
+		powerOf3("*****************************************************************************"); //wrong input
 	}
 }
