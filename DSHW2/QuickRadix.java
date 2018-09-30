@@ -1,6 +1,6 @@
 public class QuickRadix {
     private static void QuickRadixHelper(String[] str, int i, int j, int position) {
-        if(i < j) {
+        if(i < j && str[i].substring(0, position).equals(str[j].substring(0, position))) {
             int p = partition(str, i, j, position);
             QuickRadixHelper(str, i, p-1, position);
             QuickRadixHelper(str, p, j, position);
@@ -44,9 +44,6 @@ public class QuickRadix {
             } else {
                 c = strSet[i].substring(0, ind);
                 if(high - low > 0) {
-
-                    System.out.println(high);
-                    System.out.println(low);
                     QuickRadixHelper(strSet, low, high, ind+1);
                 }
                 low = i;
@@ -62,14 +59,20 @@ public class QuickRadix {
     }
     public static void main(String[] args) {
         String[] stringSet = {
-                "aewrerfefe",
-                "aarojfioer",
-                "qbrojfioer",
-                "acrojfioer",
-                "dewjuifeer",
-                "qwferuefwf"
+                "oxlmmbgmee",
+                "klnyyxwobk",
+                "qzcfcjrdpg",
+                "fngsqhawbm",
+                "fmpyifeoxo",
+                "vqpehftshz",
+                "xhalycvkvd",
+                "xwdxdybvfb",
+                "ezbowoptvb",
+                "yzpbtdskkw"
+
         };
         QuickRadix(stringSet);
+        //QuickRadixHelper(stringSet, 3, 4, 3);
 
         for(int i = 0; i < stringSet.length; i++) {
             System.out.println(stringSet[i]);
