@@ -42,7 +42,6 @@ public class StaircaseOfCubes {
 
 	private static int Q(int n, int k) {
 		// see http://mathworld.wolfram.com/PartitionFunctionQ.html
-		// Fix the 
 		return P(n - (int)nChooseK(k, 2), k);
 	}
 
@@ -72,7 +71,5 @@ public class StaircaseOfCubes {
 		for(int i = -1; i < 30; i++) {
 			System.out.println(numStaircaseOfCubes(i));
 		}
-
-
 	}
 }
