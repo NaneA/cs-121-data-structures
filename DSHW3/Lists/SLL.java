@@ -1,7 +1,6 @@
 package Lists;
 public class SLL<E> {
-    
-    private static class Node<E> {
+    public static class Node<E> {
         private E element;
         private Node<E> next;
         public Node(E e, Node<E> n) {
@@ -11,29 +10,35 @@ public class SLL<E> {
         public E getElement() {
             return element;
         }
-        
+
         public Node<E> getNext() {
             return next;
         }
-        
-        public void setNext(Node<E> node) {
+
+        private void setNext(Node<E> node) {
             next = node;
         }
 
-        public void setElement(E e) {
+        private void setElement(E e) {
             element = e;
         }
     }
-    
-    private int size;
-    private Node<E> head = null;
+
+    private int size = 0;
+
+    //this is a dangerous idea, but I don't know other way to do ex3
+    //sorry encapsulation
+    public Node<E> head = null;
     private Node<E> tail = null;
 
+    public Node<E> getHead() {
+        return head;
+    }
     //constructors
     public SLL() {}
-    
+
     public SLL(E arr[]) {
-        for(int i = 0; i < arr.length; i++) {
+        for(int i = arr.length - 1; i >= 0; i--) {
             addFirst(arr[i]);
         }
     }
@@ -41,11 +46,11 @@ public class SLL<E> {
     public int size() {
         return size;
     }
-    
+
     public boolean isEmpty() {
         return size == 0;
     }
-    
+
     //access methods
     public E first() {
         if(!isEmpty()) {
@@ -53,27 +58,16 @@ public class SLL<E> {
         }
         return null;
     }
-    
+
     public E last() {
         if(!isEmpty()) {
             return tail.getElement();
         }
         return null;
     }
-    
-    public E getAt(int i) {
-        if(i >= size || i < 0) {
-            return null;
-        }
-        Node<E> el = head;
-        while(i > 0) {
-            el = el.getNext();
-        }
-        return el.getElement();
-    }
-    
+
     //update methods
-    
+
     public void addFirst(E el) {
         head = new Node<>(el, head);
         if(isEmpty()) {
@@ -84,31 +78,13 @@ public class SLL<E> {
 
     public void addLast(E el) {
         Node<E> newest = new Node<E>(el, null);
-        if(isEmpty()) {
+        if(this.isEmpty()) {
             head = newest;
         } else {
             tail.setNext(newest);
         }
+        tail = newest;
         size++;
-    }
-
-    public void addAt(E el, int i) {
-        if(i < 0 || i > size - 1) {
-            return;
-        }
-        if(i == 0) {
-            addFirst(el);
-        } else if(i == size - 1) {
-            addLast(el);
-        }
-
-        Node<E> prev = head;
-        while(i > 0) {
-            prev = prev.next;
-            i--;
-        }
-        Node<E> newest = new Node<E>(el, prev.next);
-        prev.setNext(newest);
     }
 
     public E removeFirst() {
@@ -132,25 +108,65 @@ public class SLL<E> {
         }
     }
 
-    private void removeDubs(Node<Integer> h) {
-    	if(h==null) {
-    		return;
-    	}
-
-    	Node<Integer> cur = h;
-    	Node<Integer> prev;
-
-    	while(cur.getNext() != null) {
-    		if(cur.getElement() == cur.getNext().getElement()) {
-    			cur.setNext(cur.getNext().getNext());
-                size--;
-    		} else {
-    			cur = cur.getNext();
-    		}
-    	}
+    public E removeNext(Node<E> prev) {
+        if(prev.getNext() == null) {
+            return null;
+        }
+        E val = prev.getNext().getElement();
+        prev.setNext(prev.getNext().getNext());
+        size--;
+        if(prev.getNext() == null) {
+            tail = prev;
+        }
+        return val;
     }
+
+    //ex1
+    private void removeDubs(Node<Integer> h) {
+        if(h == null) {
+            return;
+        }
+
+        Node<Integer> cur = h;
+
+        while(cur.getNext() != null) {
+            if(cur.getElement() == cur.getNext().getElement()) {
+                removeNext((Node<E>)cur);
+            } else {
+                cur = cur.getNext();
+            }
+        }
+    }
+    //end ex1
 
     public void rmDbs() {
         removeDubs((Node<Integer>)head);
+    }
+
+    //ex3
+    public static void mergeL1L2(Node<Integer> l1, Node<Integer> l2) {
+        while(l1 != null && l2 != null) {
+            Node<Integer> newest = new Node<Integer>(l2.getElement(), l1.getNext());
+            l1.setNext(newest);
+            l1 = l1.getNext().getNext();
+            l2 = l2.getNext();
+        }
+    }
+    //end ex3
+
+    //ex4
+    private Node<E> reverseRecHelper(Node<E> node) {
+        if(node.next == null) {
+            return node;
+        }
+        Node<E> rest = reverseRecHelper(node.next);
+        node.next.next = node;
+        node.next = null;
+        return rest;
+    }
+
+    public Node<E> reverseRec() {
+        head = reverseRecHelper(head);
+        return head;
     }
 }
