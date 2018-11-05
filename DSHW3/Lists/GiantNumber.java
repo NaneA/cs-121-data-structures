@@ -5,6 +5,7 @@ public class GiantNumber {
 
 	//num.first() is the last digit of our number
 	private SLL<Integer> num;
+	private boolean borrow = false;
 
 	public GiantNumber(){}
 
@@ -37,6 +38,57 @@ public class GiantNumber {
 			temp.addLast(remainder);
 		}
 		num = temp;
+	}
+
+
+
+	private void subHelp(SLL.Node<Integer> l1, SLL.Node<Integer> l2, int carry) {
+		if(l2 == null) {
+			return;
+		}
+
+		l1.setElement(l1.getElement() - carry);
+
+		boolean dif = (l2.getElement() > l1.getElement());
+
+		int d1 = (dif ? l1.getElement() + 10 : l1.getElement());
+		int d2 = l2.getElement();
+
+		l1.setElement(d1-d2);
+
+		subHelp(l1.getNext(), l2.getNext(), (dif ? 1 : 0));
+	}
+    private void removeLeadingZeros() {
+    	SLL.Node<Integer> cur = num.head;
+    	SLL.Node<Integer> prev = null;
+    	boolean z = true;
+    	int count = 0;
+    	while(cur.getNext() != null) {
+    		if(cur.getNext().getElement() == 0 && z) {
+    			prev = cur;
+    			z = false;
+    			count++;
+    		} else if(cur.getNext().getElement() != 0 && !z) {
+    			z = true;
+    			prev = null;
+    			count = 0;
+    		} else {
+    			count++;
+    		}
+    		cur = cur.getNext();
+    	}
+
+    		
+    	if(prev != null) {
+    		num.removeRest(prev, count);
+    	}
+    }
+
+	public void subtract(GiantNumber x) {
+		borrow = false;
+		subHelp(num.head, x.num.head, 0);
+		removeLeadingZeros();
+		System.out.println(num.size());
 	}
 
 	public int digits() {

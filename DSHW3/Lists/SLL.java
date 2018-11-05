@@ -19,7 +19,7 @@ public class SLL<E> {
             next = node;
         }
 
-        private void setElement(E e) {
+        public void setElement(E e) {
             element = e;
         }
     }
@@ -119,6 +119,12 @@ public class SLL<E> {
             tail = prev;
         }
         return val;
+    }
+
+    public void removeRest(Node<E> node, int num) {
+        tail = node;
+        tail.setNext(null);
+        size -= num;
     }
 
     //ex1

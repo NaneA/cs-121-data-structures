@@ -35,17 +35,19 @@ public class Tests {
         // list1.print();
 
         Integer[] num2 = {1, 3, 4, 6, 7, 8, 9};
-        Integer[] num1 = {1, 3, 4, 6, 7, 8, 9, 4, 4, 3};
+        Integer[] num1 = {2, 3, 4, 6, 7, 8, 9};
 
 
 		GiantNumber x = new GiantNumber(num1);
 		GiantNumber y = new GiantNumber(num2);
 
-		x.print();
-		y.print();
-		x.add(y);
-		x.print();
+		// x.print();
+		// y.print();
+		// x.add(y);
+		// x.print();
 
+		x.subtract(y);
+		x.print();
 
 	}
 }
