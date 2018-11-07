@@ -35,12 +35,13 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
   //---------------- nested Node class ----------------
   /** Nested static class for a binary tree node. */
-  protected static class Node<E> implements Position<E> {
-    private E element;              // an element stored at this node
-    private Node<E> parent;         // a reference to the parent node (if any)
-    private Node<E> left;           // a reference to the left child (if any)
-    private Node<E> right;          // a reference to the right child (if any)
-    private boolean isRomanFamily;  //
+    protected static class Node<E> implements Position<E> {
+        private E element;              // an element stored at this node
+        private Node<E> parent;         // a reference to the parent node (if any)
+        private Node<E> left;           // a reference to the left child (if any)
+        private Node<E> right;          // a reference to the right child (if any)
+        private boolean isRoman;
+        private int sz;
 
     /**
      * Constructs a node with the given element and neighbors.
@@ -51,10 +52,11 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      * @param rightChild  reference to a right child node
      */
     public Node(E e, Node<E> above, Node<E> leftChild, Node<E> rightChild) {
-      element = e;
-      parent = above;
-      left = leftChild;
-      right = rightChild;
+        element = e;
+        parent = above;
+        left = leftChild;
+        right = rightChild;
+        sz = 0;
     }
 
     // accessor methods
@@ -63,7 +65,23 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     public Node<E> getLeft() { return left; }
     public Node<E> getRight() { return right; }
 
-    // update methods
+      @Override
+      public boolean isRoman() {
+          return isRoman;
+      }
+      @Override
+      public int size() {
+        return sz;
+      }
+      @Override
+      public void setSize(int i) {
+        sz = i;
+      }
+      @Override
+      public void setRoman(boolean b) {
+        isRoman = b;
+      }
+      // update methods
     public void setElement(E e) { element = e; }
     public void setParent(Node<E> parentNode) { parent = parentNode; }
     public void setLeft(Node<E> leftChild) { left = leftChild; }
