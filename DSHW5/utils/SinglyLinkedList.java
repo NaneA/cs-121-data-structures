@@ -181,19 +181,25 @@ public class SinglyLinkedList<E> implements Cloneable, Iterable<E> {
 
   private class AscendingIterator implements Iterator<E> {
     int j = 0;
-    Node<E> cur;
+    Node<E> cur = head;
+    Node<E> largest = head;
 
     public AscendingIterator() {
+        if(size > 1) {
+            Node<E> temp = head.getNext();
+            while (temp != null) {
 
-      //make cur the smallest element in the list, and largest 
-      // cur = head;
-      // Node<E> temp = head.getNext();
-      // while(temp != null) {
-      //   if(cur.getElement().compareTo(temp.getElement()) > 0) {
-      //     cur = temp;
-      //   }
-      //   temp = temp.getNext();
-      //}
+                if (((Comparable)cur.getElement()).compareTo(temp.getElement()) > 0) {
+                    cur = temp;
+                }
+
+                if (((Comparable)largest.getElement()).compareTo(temp.getElement()) < 0) {
+                    largest = temp;
+                }
+
+                temp = temp.getNext();
+            }
+        }
     }
 
     public boolean hasNext() {
@@ -201,33 +207,27 @@ public class SinglyLinkedList<E> implements Cloneable, Iterable<E> {
     }   // size is field of outer instance
 
     public E next() throws NoSuchElementException {
-      // if (j == size) {
-      //   throw new NoSuchElementException("No next element");
-      // }
+        if (j == size) {
+            throw new NoSuchElementException("No next element");
+        }
+        Node<E> walk = head;
+        Node<E> nextCur = largest;
+        while(walk != null) {
+            if(walk != cur && cur != largest) {
+                if(((Comparable)walk.getElement()).compareTo(cur.getElement()) > 0) {
+                    if(((Comparable)nextCur.getElement()).compareTo(walk.getElement()) > 0) {
+                        nextCur = walk;
+                    }
+                }
+            }
+            walk = walk.getNext();
+        }
 
-      // Node<E> temp = head;
+        Node<E> next = cur;
+        cur = nextCur;
+        j++;
 
-      // Node<E> maybeCur = cur;
-
-      // // every other > maybeCur > cur
-      // while(temp != null) {
-
-
-
-      //   if(temp.getElement().compareTo(cur.getElement()) > 0) {
-      //     if(maybeCur == null || maybeCur.getElement().compareTo(temp.getElement()) < 0) {
-      //       maybeCur = temp;
-      //       System.out.println(3);
-      //     }
-      //   }
-      //   temp = temp.getNext();
-      // }
-      
-      // cur = maybeCur;
-      // j++;
-      // return cur.getElement();
-      E obj = (E) new Object();
-      return obj;
+        return next.getElement();
     }
   } //------------ end of nested AscendingIterator class ------------
 
@@ -266,7 +266,11 @@ public class SinglyLinkedList<E> implements Cloneable, Iterable<E> {
   }
 
   public Iterator<E> iterator() {
-    return new AscendingIterator();
+      try {
+          return new AscendingIterator();
+      } catch (Exception e)  {
+          return altIterator();
+      }
   }
 
   public Iterator<E> altIterator() {

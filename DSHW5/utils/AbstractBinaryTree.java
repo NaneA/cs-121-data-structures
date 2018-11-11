@@ -122,4 +122,10 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E>
   public Iterable<Position<E>> positions() {
     return inorder();
   }
+
+
+
+  public int numDescendants(Position<E> node) {
+      return (left(node) != null ? 1 + numDescendants(left(node)): 0) + (right(node) != null ? 1 + numDescendants(right(node)): 0);
+  }
 }

@@ -1,16 +1,12 @@
 import utils.*;
 
-public class Ex5 {
 
+public class Ex3 {
     public static <E> void print(E item) {
         System.out.println(item);
     }
-
-    public static <E> Position<E> LCA(AbstractTree<E> t, Position<E> a, Position<E> b) throws IllegalArgumentException {
-        return t.LCA(a, b);
-    }
-
     public static void main(String[] args) {
+
         LinkedBinaryTree<Integer> t = new LinkedBinaryTree<Integer>();
 
         //root
@@ -34,9 +30,8 @@ public class Ex5 {
         //level 5
         t.addRight(t.left(t.left(t.left(t.root()))), -1);
 
-        print(LCA(t, t.right(t.left(t.left(t.left(t.root())))), t.right(t.left(t.root()))).getElement());
-
-        print(LCA(t, t.right(t.left(t.left(t.left(t.root())))), t.right(t.right(t.root()))).getElement());
-
+        for(Integer x : t) {
+            print(x);
+        }
     }
 }
